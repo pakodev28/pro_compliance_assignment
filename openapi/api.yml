@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: "FILES API"
+  description: "API for working with files"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+paths:
+  /sign-up:
+    post:
+      summary: Register a new user
+      operationId: register_user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /login:
+    post:
+      summary: Authenticate user and get access token
+      operationId: login_user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: User authenticated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /users/files:
+    post:
+      summary: Upload a file for a user
+      operationId: upload_file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+        '400':
+          description: Bad request - Invalid file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No file provided
+        '400':
+          description: Bad request - Empty filename
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Empty filename
+        '400':
+          description: Bad request - Invalid file format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid file format. Only CSV files are allowed.
+        '401':
+          description: Unauthorized - Invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid token
