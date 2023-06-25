@@ -134,3 +134,29 @@ paths:
                   message:
                     type: string
                     example: Invalid token
+    get:
+      summary: Get user files with column information
+      operationId: get_user_files
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        file_id:
+                          type: integer
+                        filename:
+                          type: string
+                        columns:
+                          type: array
+                          items:
+                            type: string
+                        error:
+                          type: string

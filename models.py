@@ -14,6 +14,6 @@ class File(db.Model):
     __tablename__ = "files"
 
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(255), nullable=False)
+    filename = db.Column(db.String(255), unique=True, nullable=False)
     path = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

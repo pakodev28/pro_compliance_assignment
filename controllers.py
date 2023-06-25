@@ -3,15 +3,14 @@ import os
 
 import bcrypt
 from flask import jsonify, request
-from flask_jwt_extended import (
-    create_access_token,
-    jwt_required,
-    get_jwt_identity,
-)
+from flask_jwt_extended import (create_access_token, get_jwt_identity,
+                                jwt_required)
+from pandas.errors import ParserError
 from werkzeug.utils import secure_filename
 
 from db import db
-from models import User, File
+from models import File, User
+from utils import get_file_columns
 
 
 def register_user():
@@ -66,7 +65,7 @@ def login_user():
         return jsonify(response), 401
 
     # Generate access token
-    
+
     access_token = create_access_token(
         identity=existing_user.id,
         expires_delta=datetime.timedelta(minutes=60),
@@ -92,7 +91,9 @@ def upload_file():
         return jsonify(response), 400
 
     if not file.filename.endswith(".csv"):
-        response = {"message": "Invalid file format. Only CSV files are allowed."}
+        response = {
+            "message": "Invalid file format. Only CSV files are allowed."
+        }
         return jsonify(response), 400
 
     filename = secure_filename(file.filename)
@@ -110,4 +111,42 @@ def upload_file():
     db.session.commit()
 
     response = {"message": "File uploaded successfully"}
+    return jsonify(response), 200
+
+
+@jwt_required()
+def get_user_files():
+    current_user_id = get_jwt_identity()
+
+    # Получение текущего пользователя из базы данных
+    current_user = User.query.get(current_user_id)
+
+    files = current_user.files
+
+    file_list = []
+    for file in files:
+        try:
+            columns = get_file_columns(file.path)
+
+            file_info = {
+                "file_id": file.id,
+                "filename": file.filename,
+                "columns": columns,
+            }
+            file_list.append(file_info)
+
+        except ParserError as error_message:
+            error_message = (
+                f"Error reading columns from file '{file.filename}': "
+                f"{error_message}"
+            )
+            file_info = {
+                "file_id": file.id,
+                "filename": file.filename,
+                "columns": [],
+                "error": error_message,
+            }
+            file_list.append(file_info)
+
+    response = {"files": file_list}
     return jsonify(response), 200
