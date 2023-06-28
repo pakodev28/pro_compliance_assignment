@@ -5,10 +5,12 @@
 
 ## Technologies
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat&logo=Python&logoColor=ffffff&color=043A6B)](https://www.python.org/)
-[![JWT](https://img.shields.io/badge/-JWT-464646?style=flat&color=043A6B)](https://jwt.io/)
+[![Connexion](https://img.shields.io/badge/-Connexion-464646?style=flat&color=043A6B)](https://connexion.readthedocs.io/en/stable)
 [![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat&logo=gunicorn&logoColor=ffffff&color=043A6B)](https://gunicorn.org/)
+[![JWT](https://img.shields.io/badge/-JWT-464646?style=flat&color=043A6B)](https://jwt.io/)
+[![Pandas](https://img.shields.io/badge/-Pandas-464646?style=flat&logo=Pandas&logoColor=ffffff&color=043A6B)](https://pandas.pydata.org/)
+[![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-464646?style=flat&color=043A6B)](https://www.sqlalchemy.org/)
 [![Docker](https://img.shields.io/badge/-Docker-464646?style=flat&logo=Docker&logoColor=ffffff&color=043A6B)](https://www.docker.com/)
-
 
 
 ## Functional:
