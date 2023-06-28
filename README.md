@@ -67,7 +67,7 @@
     docker build -t <create image name> .
     ```
     ```
-    docker run --name <create container name> -it <image name>
+    docker run -p 8000:8000 --name <create container name> -it <image name>
     ```
 3. Остановить контейнер:
     ```
