@@ -57,7 +57,7 @@
 ## How to deploy the service
 1. Склонировать проект:
     ```
-    git@github.com:pakodev28/pro_compliance_assignment.git
+    git clone git@github.com:pakodev28/pro_compliance_assignment.git
     ```
     ```
     cd pro_compliance_assignment
