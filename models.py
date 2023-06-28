@@ -1,7 +1,10 @@
+from sqlalchemy import UniqueConstraint
+
 from db import db
 
 
 class User(db.Model):
+    """Model User"""
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -11,9 +14,12 @@ class User(db.Model):
 
 
 class File(db.Model):
+    """Model File"""
     __tablename__ = "files"
 
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(255), unique=True, nullable=False)
+    filename = db.Column(db.String(255), nullable=False)
     path = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    __table_args__ = (UniqueConstraint("filename", "user_id"),)
