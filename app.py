@@ -11,8 +11,10 @@ def create_app():
 
     app.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
     app.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.app.config["JWT_SECRET_KEY"] = "jwt-secret-string"
-    app.app.config["SECRET_KEY"] = "some-secret-string"
+    # Заменить на серктный ключ для подписи JWT
+    app.app.config["JWT_SECRET_KEY"] = "my-secret-jwt"
+    # Заменить на серктный ключ приложения
+    app.app.config["SECRET_KEY"] = "my-secret-key"
 
     JWTManager(app.app)
 

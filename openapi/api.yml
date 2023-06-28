@@ -160,3 +160,58 @@ paths:
                             type: string
                         error:
                           type: string
+  /users/files/{file_id}:
+    delete:
+      summary: Delete a file owned by the current user
+      operationId: delete_file
+      parameters:
+        - name: file_id
+          in: path
+          description: ID of the file to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: File deleted successfully
+        '401':
+          description: Unauthorized - Invalid token
+        '404':
+          description: File not found or does not belong to the current user
+    get:
+      summary: Get file data with optional filtering and sorting
+      operationId: get_file_data_by_id
+      parameters:
+        - in: path
+          name: file_id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: filters
+          schema:
+            type: string
+          style: form
+          explode: false
+          examples:
+            filterExample:
+              value: Col1__operator__value1,Col2__operator__value2
+              summary: Example of filter values
+        - in: query
+          name: sort_columns(column:ascending(bool))
+          schema:
+            type: string
+          style: form
+          examples:
+            sortExample:
+              value: Column1:true,Column2:false
+              summary: Example of sort columns
+          style: form
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/csv:
+              schema:
+                type: string
+                format: binary
